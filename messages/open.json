@@ -1,0 +1,5 @@
+{
+  "commandDescription": "Modified version of force:org:open to allow you to specify the browser",
+  "flagBrowserDescription": "Please enter a browser, browsers or leave empty for system default browser",
+  "flagConsoleDescription": "Opens developer console in a browser rather than org setup"
+}
