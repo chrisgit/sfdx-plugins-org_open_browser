@@ -1,4 +1,4 @@
-sfdx-plugins-org_open_browser
+SFDX Plugin - Open a Salesforce Org in multiple browsers
 =============================
 
 Open a Salesforce org into a specified browser or multiple browsers.
@@ -7,13 +7,66 @@ My first Salesforce CLI plugin; an expirement in building a plugin.
 
 # Requirements
 
-You will need the Salesforce CLI installed; the Salesforce CLI contains a Yeoman generation to help you build the basic plugin scaffolding.
+- [Node LTS](https://nodejs.org/en/download/)
+- [Salesforce CLI](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm)
 
-Salesforce CLI is an npm package called sfdx-cli. You run it on your local machine or continuous integration (CI) system. It supports the installation of custom plug-ins. Most of the core functionality that Salesforce provides comes from plug-ins.
+# Installation
 
-All Salesforce CLI commands start with sfdx. To see which sfdx-cli version you’re using, run sfdx version. To see the available sets of commands—also known as namespaces or top-level topics—run sfdx --help.
+The easiest way to install the plugin is to reference the master branch of this repository; install with the following command `sfdx plugins:install git+https://github.com/chrisgit/sfdx-plugins-org_open_browser.git`
+
+# Installation from source
+
+Clone this repository, on your local file system change directory to the root of this repository, use the plugins:link sfdx command to add the plugin
+
+```
+sfdx plugins:link .
+```
+
+# Uninstalling the plugin
+
+Should sfdx become unstable or the plugin in not suitable for your needs you can easily uninstall it with the following command
+
+```
+sfdx plugins:uninstall sfdx-plugins-org_open_browser
+```
+
+# Usage
+
+Modified version of force:org:open to allow you to specify the browser
+
+```
+USAGE
+  $ sfdx chrisgit:org:open [-b <array>] [-d] [--version <version>] [-u <string>] [--apiversion <string>] [--json] 
+  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -b, --browsers=browsers                                                           Please enter a browser, browsers or leave empty for system default browser
+
+  -d, --devconsole                                                                  Opens developer console in a browser rather than org setup
+
+  -u, --targetusername=targetusername                                               username or alias for the target org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for this command invocation
+
+  --version                                                                         show CLI version
+
+EXAMPLES
+  $ Single browser                   ->  sfdx chrisgit:org:open -u scratchOrg -b iexplore
+  $ Single browser developer console ->  sfdx chrisgit:org:open -u scratchOrg -b iexplore --devconsole
+  $ Multiple browsers                ->  sfdx chrisgit:org:open -u scratchOrg -b "firefox, edge, chrome"
+  $ Multiple browsers                ->  sfdx chrisgit:org:open -u scratchOrg -b firefox,edge,chrome
+```
+
+_See code: [src\commands\chrisgit\org\open.ts](https://github.com/chrisgit/sfdx-plugins-org_open_browser/blob/v1.0.0/src\commands\chrisgit\org\open.ts)_
 
 # Development
+
+To contribute to this plugin you will need
+- A code editor of your choice (this project has recommendations for [VS Code](https://code.visualstudio.com/download))
 
 Developing a Salesforce CLI is documented on the [Salesforce Blog](https://developer.salesforce.com/blogs/2018/05/create-your-first-salesforce-cli-plugin.html). In case of any dead links here is a summary of how to create a Salesforce CLI plugin.
 
@@ -58,55 +111,6 @@ export default extends Command {
 
 The relevant library is in the node_modules after all but these libraries have changed over time, Salesforce CLI maintainers have given no guarantee on there interfaces or behaviors and I did not want to rely on them.
 
-# Installation
-
-The easiest way to install the plugin is to download the source and link it to the Salesforce CLI core
-
-```
-sfdx plugins:link directory
-```
-Where directory is the root of the Salesforce CLI plugin source
-
-# Usage
-
-Modified version of force:org:open to allow you to specify the browser
-
-```
-USAGE
-  $ sfdx chrisgit:org:open [-b <array>] [-d] [--version <version>] [-u <string>] [--apiversion <string>] [--json] 
-  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
-
-OPTIONS
-  -b, --browsers=browsers                                                           Please enter a browser, browsers or
-                                                                                    leave empty for system default
-                                                                                    browser
-
-  -d, --devconsole                                                                  Opens developer console in a browser
-                                                                                    rather than org setup
-
-  -u, --targetusername=targetusername                                               username or alias for the target
-                                                                                    org; overrides default target org
-
-  --apiversion=apiversion                                                           override the api version used for
-                                                                                    api requests made by this command
-
-  --json                                                                            format output as json
-
-  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
-                                                                                    this command invocation
-
-  --version                                                                         show CLI version
-
-EXAMPLES
-  $ Single browser                   ->  sfdx chrisgit:org:open -u scratchOrg -b iexplore
-  $ Single browser developer console ->  sfdx chrisgit:org:open -u scratchOrg -b iexplore --devconsole
-  $ Multiple browsers                ->  sfdx chrisgit:org:open -u scratchOrg -b "firefox, edge, chrome"
-  $ Multiple browsers                ->  sfdx chrisgit:org:open -u scratchOrg -b firefox,edge,chrome
-```
-
-_See code: [src\commands\chrisgit\org\open.ts](https://github.com/chrisgit/sfdx-plugins-org_open_browser/blob/v1.0.0/src\commands\chrisgit\org\open.ts)_
-<!-- commandsstop -->
-<!-- debugging-your-plugin -->
 # Debugging your plugin
 We recommend using the Visual Studio Code (VS Code) IDE for your plugin development. Included in the `.vscode` directory of this plugin is a `launch.json` config file, which allows you to attach a debugger to the node process when running your commands.
 
